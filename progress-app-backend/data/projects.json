@@ -1,0 +1,212 @@
+[
+  {
+    "projectId": 2,
+    "projectName": "KOF PVP",
+    "stages": [
+      {
+        "id": 1,
+        "name": "Project Kick off email",
+        "status": "completed",
+        "fileUrl": "/files/Project_Kickoff_email.docx"
+      },
+      {
+        "id": 2,
+        "name": "Wireframe Alignment",
+        "status": "ongoing",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 3,
+        "name": "Wireframe signoff",
+        "status": "ongoing",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 4,
+        "name": "Project and tech",
+        "status": "completed",
+        "fileUrl": "/files/Project_and_tech.docx"
+      },
+      {
+        "id": 5,
+        "name": "KT sign off",
+        "status": "incomplete",
+        "fileUrl": "/files/kt_sign_off.docx"
+      },
+      {
+        "id": 6,
+        "name": "Project sign off",
+        "status": "incomplete",
+        "fileUrl": "/files/project_sign_off.docx"
+      },
+      {
+        "id": 7,
+        "name": "Sign of on guidelines",
+        "status": "completed",
+        "fileUrl": "/files/Sign_of_on_guidelines.docx"
+      }
+    ]
+  },
+  {
+    "projectId": 3,
+    "projectName": "Command Center",
+    "stages": [
+      {
+        "id": 1,
+        "name": "Project Kick off email",
+        "status": "incomplete",
+        "fileUrl": "/files/Project_Kickoff_email.docx"
+      },
+      {
+        "id": 2,
+        "name": "Wireframe Alignment",
+        "status": "completed",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 3,
+        "name": "Wireframe signoff",
+        "status": "ongoing",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 4,
+        "name": "Project and tech",
+        "status": "completed",
+        "fileUrl": "/files/Project_and_tech.docx"
+      },
+      {
+        "id": 5,
+        "name": "KT sign off",
+        "status": "ongoing",
+        "fileUrl": "/files/kt_sign_off.docx"
+      },
+      {
+        "id": 6,
+        "name": "Project sign off",
+        "status": "ongoing",
+        "fileUrl": "/files/project_sign_off.docx"
+      },
+      {
+        "id": 7,
+        "name": "Sign of on guidelines",
+        "status": "ongoing",
+        "fileUrl": "/files/Sign_of_on_guidelines.docx"
+      }
+    ]
+  },
+  {
+    "projectId": 4,
+    "projectName": "PEPSI",
+    "stages": [
+      {
+        "id": 1,
+        "name": "Project Kick off email",
+        "status": "incomplete",
+        "fileUrl": "/files/Project_Kickoff_email.docx"
+      },
+      {
+        "id": 2,
+        "name": "Wireframe Alignment",
+        "status": "completed",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 3,
+        "name": "Wireframe signoff",
+        "status": "ongoing",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 4,
+        "name": "Project and tech",
+        "status": "completed",
+        "fileUrl": "/files/Project_and_tech.docx"
+      },
+      {
+        "id": 5,
+        "name": "KT sign off",
+        "status": "ongoing",
+        "fileUrl": "/files/kt_sign_off.docx"
+      },
+      {
+        "id": 6,
+        "name": "Project sign off",
+        "status": "ongoing",
+        "fileUrl": "/files/project_sign_off.docx"
+      },
+      {
+        "id": 7,
+        "name": "Sign of on guidelines",
+        "status": "ongoing",
+        "fileUrl": "/files/Sign_of_on_guidelines.docx"
+      },
+      {
+        "id": 5,
+        "name": "KT sign off",
+        "status": "ongoing",
+        "fileUrl": "/files/kt_sign_off.docx"
+      },
+      {
+        "id": 6,
+        "name": "Project sign off",
+        "status": "ongoing",
+        "fileUrl": "/files/project_sign_off.docx"
+      },
+      {
+        "id": 7,
+        "name": "Sign of on guidelines",
+        "status": "ongoing",
+        "fileUrl": "/files/Sign_of_on_guidelines.docx"
+      }
+    ]
+  },
+  {
+    "projectId": 5,
+    "projectName": "Husky",
+    "stages": [
+      {
+        "id": 1,
+        "name": "Project Kick off email",
+        "status": "completed",
+        "fileUrl": "/files/Project_Kickoff_email.docx"
+      },
+      {
+        "id": 2,
+        "name": "Wireframe Alignment",
+        "status": "incomplete",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 3,
+        "name": "Wireframe signoff",
+        "status": "ongoing",
+        "fileUrl": "/files/wireframe_alignment.docx"
+      },
+      {
+        "id": 4,
+        "name": "Project and tech",
+        "status": "completed",
+        "fileUrl": "/files/Project_and_tech.docx"
+      },
+      {
+        "id": 5,
+        "name": "KT sign off",
+        "status": "incomplete",
+        "fileUrl": "/files/kt_sign_off.docx"
+      },
+      {
+        "id": 6,
+        "name": "Project sign off",
+        "status": "ongoing",
+        "fileUrl": "/files/project_sign_off.docx"
+      },
+      {
+        "id": 7,
+        "name": "Sign of on guidelines",
+        "status": "ongoing",
+        "fileUrl": "/files/Sign_of_on_guidelines.docx"
+      }
+    ]
+  }
+]
