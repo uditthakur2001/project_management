@@ -5,7 +5,6 @@ import {
   Box,
   Card,
   CardContent,
-  CardActions,
   Button,
   CircularProgress,
 } from "@mui/material";
@@ -71,43 +70,39 @@ const FilePage: React.FC = () => {
       <Box
         display="flex"
         flexWrap="wrap"
-        justifyContent="space-between"
+        // justifyContent= "normal"
         gap={4} 
       >
         {files.map((item) => (
           <Box
             key={item.id} 
-            sx={{ minWidth: "250px"}} 
+            sx={{ width: "150px",height: "150px"  }} 
           >
             <Card
               sx={{
-                boxShadow: 3,
+                marginTop: 5,
+                boxShadow: 5,
                 borderRadius: 2,
-                height: "150px",
+                height: "100px",
                 transition: "transform 0.2s",
                 "&:hover": {
                   transform: "scale(1.05)",
                 },
               }}
             >
-              {" "}
               <CardContent>
-                <Typography variant="h6">{item.name}</Typography>
-                <Typography variant="body2" color="textSecondary" paragraph>
-                  {item.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
+              <Button
                   size="small"
                   color="primary"
                   component="a"
                   href={item.fileUrl || item.url}
                   download={item.name} 
                 >
-                  Download
+                <Typography >{item.name}</Typography>
                 </Button>
-              </CardActions>
+              </CardContent>
+                
+               
             </Card>
           </Box>
         ))}

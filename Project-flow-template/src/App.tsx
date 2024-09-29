@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import ProgressPage from "./components/ProgressPage";
@@ -12,14 +12,21 @@ import AdminPanel from './components/AdminPanel';
 import Login from './components/Login';
 
 const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+  }, []);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", "true");
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
   };
 
   return (
@@ -29,70 +36,33 @@ const App: React.FC = () => {
         <Router>
           <AppBar position="sticky">
             <Toolbar>
-              <Typography variant="h5" sx={{ flexGrow: 1, color: "white" }}>
+              <Typography component={Link} to="/" variant="h5" sx={{ flexGrow: 1, color: "white", textDecorationLine: 'none' }}>
                 Project Management
               </Typography>
-              <Button
-                component={Link}
-                to="/"
-                color="inherit"
-                sx={{
-                  fontWeight: "bold",
-                  borderRadius: "8px",
-                  padding: "10px 20px",
-                  color: "white" 
-                }}
-              >
+              <Button component={Link} to="/" color="inherit" sx={{ fontWeight: "bold", borderRadius: "8px", padding: "10px 20px", color: "white" }}>
                 Progress Page
               </Button>
-             
               {isLoggedIn ? (
-                <Button
-                  component={Link}
-                  to="/admin"
-                  color="inherit"
-                  sx={{
-                    fontWeight: "bold",
-                    borderRadius: "8px",
-                    padding: "10px 20px",
-                    color: "white" 
-                  }}
-                >
-                  Admin Panel
-                </Button>
+                <>
+                  <Button component={Link} to="/admin" color="inherit" sx={{ fontWeight: "bold", borderRadius: "8px", padding: "10px 20px", color: "white" }}>
+                    Admin Panel
+                  </Button>
+                  <Button onClick={handleLogout} color="inherit" sx={{ fontWeight: "bold", borderRadius: "8px", padding: "10px 20px", color: "white" }}>
+                    Logout
+                  </Button>
+                </>
               ) : (
-                <Button
-                  component={Link}
-                  to="/admin-login"
-                  color="inherit"
-                  sx={{
-                    fontWeight: "bold",
-                    borderRadius: "8px",
-                    padding: "10px 20px",
-                  }}
-                >
+                <Button component={Link} to="/admin-login" color="inherit" sx={{ fontWeight: "bold", borderRadius: "8px", padding: "10px 20px", color: "white" }}>
                   Admin Login
                 </Button>
               )}
             </Toolbar>
           </AppBar>
           <Routes>
-            <Route path="/" element={<ProgressPage />} />
+            <Route path="/" element={<ProgressPage isAdmin={isLoggedIn} />} />
             <Route path="/project-details/:projectId" element={<ProjectDetails />} />
-            <Route
-              path="/admin"
-              element={
-                isLoggedIn ? (
-                  <AdminPanel onLogout={handleLogout} />
-                ) : (
-                  <Navigate to="/admin-login" />
-                )
-              }
-            />
-            <Route
-              path="/admin-login"
-              element={<Login onLogin={handleLogin} />}
-            />
+            <Route path="/admin" element={isLoggedIn ? <AdminPanel onLogout={handleLogout} /> : <Navigate to="/admin-login" />} />
+            <Route path="/admin-login" element={<Login onLogin={handleLogin} />} />
           </Routes>
         </Router>
       </ThemeProvider>

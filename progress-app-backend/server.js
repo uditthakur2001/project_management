@@ -41,10 +41,9 @@ app.get('/projects/:projectId', (req, res) => {
   });
 });
 
-// Add a new project
+// Add a new project with stages from downloads.json
 app.post('/projects', (req, res) => {
   const newProject = req.body;
-
   if (!newProject || !newProject.projectName) {
     return res.status(400).json({ error: 'Project name is required' });
   }
@@ -55,21 +54,38 @@ app.post('/projects', (req, res) => {
     }
 
     let projects = JSON.parse(data);
-
-    // Check for duplicate project name
     const exists = projects.some(p => p.projectName.toLowerCase() === newProject.projectName.toLowerCase());
+
     if (exists) {
       return res.status(409).json({ error: 'Project name already exists' });
     }
 
-    newProject.projectId = projects.length > 0 ? projects[projects.length - 1].projectId + 1 : 1; 
-    projects.push(newProject);
+    newProject.projectId = projects.length > 0 ? projects[projects.length - 1].projectId + 1 : 1;
 
-    fs.writeFile(projectsFilePath, JSON.stringify(projects, null, 2), (err) => {
+    // Read stages from downloads.json
+    fs.readFile(downloadsFilePath, 'utf-8', (err, downloadData) => {
       if (err) {
-        return res.status(500).send('Error saving projects');
+        return res.status(500).send('Error reading downloads');
       }
-      res.json(newProject); 
+
+      const downloads = JSON.parse(downloadData);
+      
+      // Add all stages from downloads to the new project
+      newProject.stages = downloads.map(download => ({
+        id: download.id, // Ensure unique ID logic if needed
+        name: download.name,
+        fileUrl: download.fileUrl,
+        status: "incomplete", // Default status
+      }));
+
+      projects.push(newProject);
+
+      fs.writeFile(projectsFilePath, JSON.stringify(projects, null, 2), (err) => {
+        if (err) {
+          return res.status(500).send('Error saving projects');
+        }
+        res.json(newProject);
+      });
     });
   });
 });
@@ -162,8 +178,6 @@ app.put('/projects/stage/:projectId/:id', (req, res) => {
   });
 });
 
-
-
 // Delete a stage from a project
 app.delete('/projects/stage/:projectId/:id', (req, res) => {
   const projectId = parseInt(req.params.projectId, 10);
@@ -199,9 +213,7 @@ app.get('/downloads', (req, res) => {
   });
 });
 
-
-
-// Add a new download
+// Add a new download and update projects
 app.post('/downloads', (req, res) => {
   const newDownload = req.body;
 
@@ -218,7 +230,30 @@ app.post('/downloads', (req, res) => {
       if (err) {
         return res.status(500).send('Error saving downloads');
       }
-      res.json(downloads); 
+
+      // Now update all projects to include this download as a stage
+      fs.readFile(projectsFilePath, 'utf-8', (err, projectData) => {
+        if (err) {
+          return res.status(500).send('Error reading projects');
+        }
+
+        const projects = JSON.parse(projectData);
+        projects.forEach(project => {
+          project.stages.push({
+            id: newDownload.id,
+            name: newDownload.name,
+            fileUrl: newDownload.fileUrl,
+            status: "incomplete", // Set a default status
+          });
+        });
+
+        fs.writeFile(projectsFilePath, JSON.stringify(projects, null, 2), (err) => {
+          if (err) {
+            return res.status(500).send('Error saving projects');
+          }
+          res.json(downloads); 
+        });
+      });
     });
   });
 });

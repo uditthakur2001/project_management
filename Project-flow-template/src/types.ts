@@ -9,10 +9,11 @@ export interface Stage {
   }
   
   export interface Project {
-    projectId: number;
+    projectId: number; // or number, depending on your backend
     projectName: string;
-    stages: Stage[]; // Project contains an array of Stage objects
+    stages: Stage[]; // Define a more specific type if possible
   }
+  
   
 export interface RootState {
   download: {

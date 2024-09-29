@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import SweetAlert from "sweetalert2";
 
 interface LoginProps {
   onLogin: () => void; 
@@ -13,12 +14,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Basic hardcoded authentication for demonstration
     if (username === 'admin' && password === 'password') {
       onLogin(); 
       navigate('/admin');
     } else {
       setError('Invalid credentials');
+      SweetAlert.fire("Error", "Invalid credentials", "error");
     }
   };
 

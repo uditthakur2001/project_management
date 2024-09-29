@@ -34,17 +34,5 @@
     "name": "Project sign off",
     "description": "Download Document",
     "fileUrl": "/files/project_sign_off.docx"
-  },
-  {
-    "id": 7,
-    "name": "Sign of on guidelines",
-    "description": "Download Document",
-    "fileUrl": "/files/Sign_of_on_guidelines.docx"
-  },
-  {
-    "name": "Chatpdf",
-    "description": "chatpdf",
-    "fileUrl": "/files/Project_Development_Tracker(Overview).csv",
-    "id": 10
   }
 ]

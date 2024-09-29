@@ -12,7 +12,7 @@ import { Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import axios from "axios";
 import SweetAlert from "sweetalert2";
 
-const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+const AdminPanel: React.FC<{ onLogout: () => void; setIsAdminLoggedIn: (loggedIn: boolean) => void; }> = ({  }) => {
   const [projects, setProjects] = useState<any[]>([]);
   const [stages, setStages] = useState<any[]>([]);
   const [downloads, setDownloads] = useState<any[]>([]);
@@ -44,7 +44,9 @@ const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const fetchStages = async () => {
     if (selectedProject) {
       try {
-        const response = await axios.get(`http://localhost:3001/projects/${selectedProject}`);
+        const response = await axios.get(
+          `http://localhost:3001/projects/${selectedProject}`
+        );
         setStages(response.data.stages || []);
       } catch (error) {
         console.error("Error fetching stages:", error);
