@@ -5,9 +5,8 @@ import ProgressPage from "./components/ProgressPage";
 import { Provider } from "react-redux";
 import store from "./redux/store"; 
 import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+// import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme";
-import ProjectDetails from './components/ProjectDetails';
 import AdminPanel from './components/AdminPanel';
 import Login from './components/Login';
 
@@ -32,7 +31,7 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         <Router>
           <AppBar position="sticky">
             <Toolbar>
@@ -60,7 +59,6 @@ const App: React.FC = () => {
           </AppBar>
           <Routes>
             <Route path="/" element={<ProgressPage isAdmin={isLoggedIn} />} />
-            <Route path="/project-details/:projectId" element={<ProjectDetails />} />
             <Route path="/admin" element={isLoggedIn ? <AdminPanel onLogout={handleLogout} /> : <Navigate to="/admin-login" />} />
             <Route path="/admin-login" element={<Login onLogin={handleLogin} />} />
           </Routes>

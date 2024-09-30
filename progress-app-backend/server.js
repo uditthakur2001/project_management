@@ -231,7 +231,6 @@ app.post('/downloads', (req, res) => {
         return res.status(500).send('Error saving downloads');
       }
 
-      // Now update all projects to include this download as a stage
       fs.readFile(projectsFilePath, 'utf-8', (err, projectData) => {
         if (err) {
           return res.status(500).send('Error reading projects');

@@ -1,4 +1,3 @@
-// File: src/redux/downloadSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Download {
@@ -12,19 +11,18 @@ interface Stage {
   id: number;
   name: string;
   fileUrl: string;
-  status: 'ongoing' | 'completed' | 'incomplete'; // Make sure to include 'incomplete' if it's used in your stages
-  projectId?: number; // Optional projectId for filtering stages
-
+  status: 'ongoing' | 'completed' | 'incomplete'; 
+  projectId?: number; 
 }
 
 interface DownloadsState {
   downloads: Download[];
-  stages: Stage[]; // Separate stages array
+  stages: Stage[];
 }
 
 const initialState: DownloadsState = {
   downloads: [],
-  stages: [], // Initialize stages
+  stages: [], 
 };
 
 const downloadsSlice = createSlice({
@@ -35,14 +33,13 @@ const downloadsSlice = createSlice({
       state.downloads = action.payload;
     },
     setStages: (state, action: PayloadAction<Stage[]>) => {
-      state.stages = action.payload; // Saving stages in a separate array
+      state.stages = action.payload; 
     },
     updateStageStatus(state, action: PayloadAction<Stage[]>) {
-      state.stages = action.payload; // Update stages with the new status
+      state.stages = action.payload; 
     },
   },
 });
 
-// Export actions
 export const { setDownloads, setStages, updateStageStatus } = downloadsSlice.actions;
 export default downloadsSlice.reducer;

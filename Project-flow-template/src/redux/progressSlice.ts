@@ -22,8 +22,6 @@ const initialState: ProjectsState = {
   projects: [],
 };
 
-
-
 const projectsSlice = createSlice({
   name: 'projects',
   initialState,

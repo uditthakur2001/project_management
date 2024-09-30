@@ -1,23 +1,20 @@
-// File: types.ts
-
 export interface Stage {
     id: number;
     name: string;
     fileUrl: string;
     status: 'ongoing' | 'completed' | 'incomplete';
-    projectId: number; // Ensure projectId is included
+    projectId: number; 
   }
   
   export interface Project {
-    projectId: number; // or number, depending on your backend
+    projectId: number; 
     projectName: string;
-    stages: Stage[]; // Define a more specific type if possible
+    stages: Stage[]; 
   }
   
   
 export interface RootState {
   download: {
-    stages: Stage[]; // Adjust this to match your state structure
+    stages: Stage[]; 
   };
-  // Add other slices if you have them
 }
