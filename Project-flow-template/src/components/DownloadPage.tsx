@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  Container,
-  Box,
-  Select,
-  MenuItem,
-  FormControl,
-  Badge,
-} from "@mui/material";
+import {Typography, Container, Box, Select, MenuItem, FormControl, Badge} from "@mui/material";
 import axios from "axios";
 import { Stage } from "../types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Swal from 'sweetalert2';
 
 interface DownloadPageProps {
   projectId: number;
@@ -44,6 +37,15 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
     stageId: number,
     status: "ongoing" | "completed" | "incomplete"
   ) => {
+    if (!isAdmin) {
+      await Swal.fire({
+        icon: 'warning',
+        title: 'Access Denied',
+        text: 'Only admins can change the status.',
+      });
+      return;
+    }
+
     const updatedStages = stages.map((stage) => {
       if (stage.id === stageId) {
         return { ...stage, status };
@@ -64,9 +66,18 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
       { status }
     );
   };
-
+  
   const onDragEnd = async (result: any) => {
     if (!result.destination) return;
+
+    if (!isAdmin) {
+      await Swal.fire({
+        icon: 'warning',
+        title: 'Access Denied',
+        text: 'Only admins can rearrange the stages.',
+      });
+      return;
+    }
 
     const reorderedStages = Array.from(stages);
     const [movedStage] = reorderedStages.splice(result.source.index, 1);
@@ -115,9 +126,9 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
                     sx={{
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: rowIndex % 2 === 0 ? "flex-start" : "flex-end", // Change alignment
-                      marginLeft: rowIndex === 1 ? "30px" : "0", // Add margin to the second row
-                      width: "100%", // Ensure full width for each row
+                      justifyContent: rowIndex % 2 === 0 ? "flex-start" : "flex-end", 
+                      marginLeft: rowIndex === 1 ? "30px" : "0", 
+                      width: "100%", 
                     }}
                   >
                     {displayedStages.map((stage, index) => {
@@ -166,7 +177,7 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
                                   </FormControl>
                                 </Box>
                                 <Badge
-                    badgeContent={overallIndex + 1} // Adjusted for 1-based index
+                    badgeContent={overallIndex + 1} 
                     color="primary"
                     sx={{ marginBottom: "5px" }}
                   >
@@ -203,8 +214,7 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
                                 margin: "8px",
                                 alignSelf: "center",
                                 // display: isLastInRow ? 'none' : 'flex',
-                                // transform: 'translateY(110px)',
-                                transform: `translateY(30px) ${rowIndex % 2 === 0 ? 'rotate(0deg)' : 'rotate(180deg)'}`, // Change direction
+                                transform: `translateY(30px) ${rowIndex % 2 === 0 ? 'rotate(0deg)' : 'rotate(180deg)'}`, 
                               }}
                             >
                               &rarr;
@@ -217,12 +227,10 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
                               sx={{
                                 margin: "5px",
                                 alignSelf: "center",
-                                // transform: 'translate(-85px, 110px)'
-                                transform: `${rowIndex % 2 === 0 ? 'translate(-85px, 110px)' : 'translate(-1095px, 110px)'}`, // Change direction
-                                // transform: 'translateY(15px)'
+                                transform: `${rowIndex % 2 === 0 ? 'translate(-85px, 110px)' : 'translate(-1095px, 110px)'}`, 
                               }}
                             >
-                              &#8595; {/* Down arrow */}
+                              &#8595; 
                             </Typography>
                           )}
                         </React.Fragment>

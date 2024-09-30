@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Card, CardContent, Typography, Box, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import DownloadPage from "./DownloadPage";
 import { Project } from "../types";
 import FilePage from './FilePage'; 
@@ -39,42 +46,61 @@ const ProgressPage: React.FC<{ isAdmin: boolean }> = ({ isAdmin }) => {
       setSelectedProject(project);
     }, 0);
   };
- 
 
   return (
-    <Box style={{ padding: "20px" }}>
-      {/* <Typography variant="h4" gutterBottom align="center">
-        Projects Progress
-      </Typography> */}
-
-{/* Dropdown Menu for Projects */}
-      <FormControl style={{ display: 'flex' ,width:'15%', justifyContent: 'center'
-    
-      }} size="small" margin="normal"
-      >
-        <InputLabel>Select Project</InputLabel>
-        <Select
-          
-          value={selectedProject?.projectId || ""}
-          onChange={(e) => {
-            const projectId = e.target.value;
-            const selected = projects.find((project) => project.projectId === projectId);
-            if (selected) handleViewStages(selected);
-          }}
-          displayEmpty
+    <Box style={{ padding: "20px", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {/* Dropdown Menu for Projects */}
+      {projects.length === 0 ? (
+        <Typography fontSize={'22px'} fontWeight={'600'} marginBottom={'-20px'} color="textSecondary">
+          No projects available
+        </Typography>
+      ) : (
+        <FormControl 
+          sx={{
+            width: '200px', 
+            backgroundColor: '#f5f5f5', 
+            borderRadius: '4px',
+            boxShadow: 2,
+            '&:hover': {
+              backgroundColor: 'rgba(72, 194, 195, .5)',
+              color: 'white',
+            },
+          }} 
+          size="small" 
+          margin="normal"
         >
-          {projects.map((project) => (
-            <MenuItem key={project.projectId} value={project.projectId}>
-              {project.projectName}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      
+          <InputLabel 
+            sx={{
+              position: 'absolute',
+              top: '-8px',
+              left: '10px',
+              padding: '0 5px',
+              fontSize: '14px',
+            }}
+          >
+            Select Project
+          </InputLabel>
+          <Select
+            value={selectedProject?.projectId || ""}
+            onChange={(e) => {
+              const projectId = e.target.value;
+              const selected = projects.find((project) => project.projectId === projectId);
+              if (selected) handleViewStages(selected);
+            }}
+            displayEmpty
+          >
+            {projects.map((project) => (
+              <MenuItem key={project.projectId} value={project.projectId}>
+                {project.projectName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
 
       {selectedProject && (
-        <Box mt={5}>
-          <Typography variant="h4" align="center" gutterBottom>
+        <Box mt={5} textAlign="center">
+          <Typography variant="h4" gutterBottom>
             Project Stages for {selectedProject.projectName}
           </Typography>
           <DownloadPage

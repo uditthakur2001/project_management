@@ -165,9 +165,12 @@ const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     try {
       await axios.delete(`http://localhost:3001/projects/${projectId}`);
       fetchProjects();
+      SweetAlert.fire("Success", "Deleted project successfully", "success");
+
     } catch (error) {
       console.error("Error deleting project:", error);
     }
+
   };
 
   const handleDeleteStage = async (stageId: number) => {
@@ -177,6 +180,8 @@ const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           `http://localhost:3001/projects/stage/${selectedProject}/${stageId}`
         );
         fetchStages();
+      SweetAlert.fire("Success", "Deleted stage successfully", "success");
+
       } catch (error) {
         console.error("Error deleting stage:", error);
       }
@@ -187,6 +192,8 @@ const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     try {
       await axios.delete(`http://localhost:3001/downloads/${downloadId}`);
       fetchDownloads();
+      SweetAlert.fire("Success", "Deleted download successfully", "success");
+
     } catch (error) {
       console.error("Error deleting download:", error);
     }
@@ -204,11 +211,6 @@ const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   return (
     <Box p={3} style={{ backgroundColor: "#f0f4f8", minHeight: "100vh" }}>
       
-{/* 
-      <Typography variant="h4" gutterBottom style={{ color: "#3f51b5" }}>
-        Manage Projects, Stages and Downloads
-      </Typography>
-       */}
       <Box display="flex" justifyContent="space-between" mb={3}>
         
         <Paper

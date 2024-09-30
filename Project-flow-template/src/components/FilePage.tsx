@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  Button,
-  CircularProgress,
-} from "@mui/material";
+import {Container, Typography, Box, Card, CardContent, Button, CircularProgress} from "@mui/material";
 
 interface FileItem {
   id: number;
   name: string;
   description: string;
-  fileUrl?: string; // Ensure this is the URL for downloading the file
+  fileUrl?: string; 
   url?: string;
 }
 
@@ -70,7 +62,6 @@ const FilePage: React.FC = () => {
       <Box
         display="flex"
         flexWrap="wrap"
-        // justifyContent= "normal"
         gap={4} 
       >
         {files.map((item) => (

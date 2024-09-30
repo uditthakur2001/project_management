@@ -1,6 +1,6 @@
 [
   {
-    "projectName": "KOF PVP",
+    "projectName": "Project ",
     "stages": [
       {
         "id": 1,
@@ -12,19 +12,19 @@
         "id": 2,
         "name": "Wireframe Alignment",
         "fileUrl": "/files/wireframe_alignment.docx",
-        "status": "ongoing"
+        "status": "completed"
       },
       {
         "id": 3,
         "name": "Wireframe signoff",
         "fileUrl": "/files/wireframe_alignment.docx",
-        "status": "incomplete"
+        "status": "ongoing"
       },
       {
         "id": 4,
         "name": "Project and tech",
         "fileUrl": "/files/Project_and_tech.docx",
-        "status": "incomplete"
+        "status": "ongoing"
       },
       {
         "id": 5,
@@ -40,89 +40,5 @@
       }
     ],
     "projectId": 1
-  },
-  {
-    "projectName": "Softy",
-    "stages": [
-      {
-        "id": 1,
-        "name": "Project Kick off email",
-        "fileUrl": "/files/Project_Kickoff_email.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 2,
-        "name": "Wireframe Alignment",
-        "fileUrl": "/files/wireframe_alignment.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 3,
-        "name": "Wireframe signoff",
-        "fileUrl": "/files/wireframe_alignment.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 4,
-        "name": "Project and tech",
-        "fileUrl": "/files/Project_and_tech.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 5,
-        "name": "KT sign off",
-        "fileUrl": "/files/kt_sign_off.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 6,
-        "name": "Project sign off",
-        "fileUrl": "/files/project_sign_off.docx",
-        "status": "incomplete"
-      }
-    ],
-    "projectId": 2
-  },
-  {
-    "projectName": "Command Center",
-    "stages": [
-      {
-        "id": 1,
-        "name": "Project Kick off email",
-        "fileUrl": "/files/Project_Kickoff_email.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 2,
-        "name": "Wireframe Alignment",
-        "fileUrl": "/files/wireframe_alignment.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 3,
-        "name": "Wireframe signoff",
-        "fileUrl": "/files/wireframe_alignment.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 4,
-        "name": "Project and tech",
-        "fileUrl": "/files/Project_and_tech.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 5,
-        "name": "KT sign off",
-        "fileUrl": "/files/kt_sign_off.docx",
-        "status": "incomplete"
-      },
-      {
-        "id": 6,
-        "name": "Project sign off",
-        "fileUrl": "/files/project_sign_off.docx",
-        "status": "incomplete"
-      }
-    ],
-    "projectId": 3
   }
 ]
