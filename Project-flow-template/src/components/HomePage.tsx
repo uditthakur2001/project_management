@@ -12,7 +12,7 @@ import DownloadPage from "./DownloadPage";
 import { Project } from "../types";
 import FilePage from './FilePage'; 
 
-const ProgressPage: React.FC<{ isAdmin: boolean }> = ({ isAdmin }) => {
+const HomePage: React.FC<{ isAdmin: boolean }> = ({ isAdmin }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,7 +50,6 @@ const ProgressPage: React.FC<{ isAdmin: boolean }> = ({ isAdmin }) => {
   return (
     <Box style={{ padding: "20px", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {/* Dropdown Menu for Projects */}
-      Select Project
       {projects.length === 0 ? (
         <Typography fontSize={'22px'} fontWeight={'600'} marginBottom={'-20px'} color="textSecondary">
           No projects available
@@ -61,7 +60,6 @@ const ProgressPage: React.FC<{ isAdmin: boolean }> = ({ isAdmin }) => {
             width: '200px', 
             backgroundColor: '#f5f5f5', 
             borderRadius: '4px',
-            marginTop: '0px',
             boxShadow: 2,
             '&:hover': {
               backgroundColor: 'rgba(72, 194, 195, .5)',
@@ -80,7 +78,7 @@ const ProgressPage: React.FC<{ isAdmin: boolean }> = ({ isAdmin }) => {
               fontSize: '14px',
             }}
           >
-            {/* Select Project */}
+            Select Project
           </InputLabel>
           <Select
             value={selectedProject?.projectId || ""}
@@ -123,4 +121,4 @@ const ProgressPage: React.FC<{ isAdmin: boolean }> = ({ isAdmin }) => {
   );
 };
 
-export default ProgressPage;
+export default HomePage;

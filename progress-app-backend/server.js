@@ -135,7 +135,7 @@ app.post('/projects/stage/:projectId', (req, res) => {
     const newStage = {
       id: project.stages.length > 0 ? project.stages[project.stages.length - 1].id + 1 : 1,
       ...stageData,
-      status: "ongoing" // Default status
+      status: "incomplete" // Default status
     };
     project.stages.push(newStage);
 
@@ -278,9 +278,31 @@ app.delete('/downloads/:id', (req, res) => {
   });
 });
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the admin API!');
+
+// Update stages in a project for reorder
+app.put('/reorder/:projectId', (req, res) => {
+  const projectId = parseInt(req.params.projectId, 10);
+  const updatedStages = req.body.stages; 
+
+  fs.readFile(projectsFilePath, 'utf-8', (err, data) => {
+    if (err) return res.status(500).send('Error reading projects data');
+
+    const projects = JSON.parse(data);
+    const project = projects.find(p => p.projectId === projectId);
+    
+    if (!project) return res.status(404).send('Project not found');
+
+    project.stages = updatedStages;
+
+    fs.writeFile(projectsFilePath, JSON.stringify(projects, null, 2), (err) => {
+      if (err) return res.status(500).send('Error saving data');
+      res.json(project.stages); 
+    });
+  });
 });
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

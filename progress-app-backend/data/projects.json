@@ -1,6 +1,6 @@
 [
   {
-    "projectName": "Project ",
+    "projectName": "KOF PVP",
     "stages": [
       {
         "id": 1,
@@ -24,7 +24,7 @@
         "id": 4,
         "name": "Project and tech",
         "fileUrl": "/files/Project_and_tech.docx",
-        "status": "incomplete"
+        "status": "ongoing"
       },
       {
         "id": 5,
@@ -40,5 +40,47 @@
       }
     ],
     "projectId": 1
+  },
+  {
+    "projectName": "Hubble",
+    "stages": [
+      {
+        "id": 1,
+        "name": "Project Kick off email",
+        "fileUrl": "/files/Project_Kickoff_email.docx",
+        "status": "completed"
+      },
+      {
+        "id": 2,
+        "name": "Wireframe Alignment",
+        "fileUrl": "https://decisionpointin-my.sharepoint.com/:x:/r/personal/mohitk_mahto_decisionpoint_in/_layouts/15/Doc.aspx?sourcedoc=%7B80824AB4-D85A-4293-9D0F-AB765854A7BD%7D&file=Project_Development_Tracker.xlsx&fromShare=true&action=default&mobileredirect=true",
+        "status": "ongoing"
+      },
+      {
+        "id": 3,
+        "name": "Wireframe signoff",
+        "fileUrl": "/files/wireframe_alignment.docx",
+        "status": "incomplete"
+      },
+      {
+        "id": 4,
+        "name": "Project and tech",
+        "fileUrl": "/files/Project_and_tech.docx",
+        "status": "incomplete"
+      },
+      {
+        "id": 5,
+        "name": "KT sign off",
+        "fileUrl": "/files/kt_sign_off.docx",
+        "status": "incomplete"
+      },
+      {
+        "id": 6,
+        "name": "Project sign off",
+        "fileUrl": "/files/project_sign_off.docx",
+        "status": "incomplete"
+      }
+    ],
+    "projectId": 2
   }
 ]

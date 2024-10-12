@@ -11,8 +11,9 @@ import {
 import { Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import axios from "axios";
 import SweetAlert from "sweetalert2";
+// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+const AdminPanel: React.FC<{ onLogout: () => void }> = ({}) => {
   const [projects, setProjects] = useState<any[]>([]);
   const [stages, setStages] = useState<any[]>([]);
   const [downloads, setDownloads] = useState<any[]>([]);
@@ -440,76 +441,6 @@ const AdminPanel: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
       </Paper>
 
       </Box>
-{/* 
-      <Typography variant="h4" gutterBottom style={{ color: "#3f51b5" }}>
-        Manage Downloads
-      </Typography>
-      <Paper
-        elevation={5}
-        style={{
-          padding: "16px",
-          backgroundColor: "#ffffff",
-          borderRadius: "15px",
-          boxShadow: "0 3px 10px rgba(0,0,0,0.2)",
-        }}
-      >
-        <TextField
-          label="Download Name"
-          value={downloadName}
-          onChange={(e) => setDownloadName(e.target.value)}
-          fullWidth
-          variant="outlined"
-          style={{ marginBottom: "10px" }}
-        />
-        <TextField
-          label="Description"
-          value={downloadDescription}
-          onChange={(e) => setDownloadDescription(e.target.value)}
-          fullWidth
-          variant="outlined"
-          style={{ marginBottom: "10px" }}
-        />
-        <TextField
-          label="Download URL"
-          value={downloadUrl}
-          onChange={(e) => setDownloadUrl(e.target.value)}
-          fullWidth
-          variant="outlined"
-          style={{ marginBottom: "10px" }}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleAddDownload}
-          startIcon={<AddIcon />}
-          style={{ borderRadius: "25px" }}
-        >
-          Add Download
-        </Button>
-
-        {downloads.map((download) => (
-          <Box
-            key={download.id}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            style={{
-              marginTop: "10px",
-              padding: "10px",
-              backgroundColor: "#e3f2fd",
-              borderRadius: "10px",
-            }}
-          >
-            <Typography variant="body1">{download.name}</Typography>
-            <IconButton
-              color="secondary"
-              onClick={() => handleDeleteDownload(download.id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        ))}
-      </Paper> */}
     </Box>
   );
 };

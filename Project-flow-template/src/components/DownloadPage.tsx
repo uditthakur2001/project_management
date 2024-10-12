@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
-import {Typography, Container, Box, Select, MenuItem, FormControl, Badge} from "@mui/material";
+import {
+  Typography,
+  Container,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  Badge,
+} from "@mui/material";
 import axios from "axios";
 import { Stage } from "../types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 interface DownloadPageProps {
   projectId: number;
@@ -18,7 +26,6 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
   isAdmin,
 }) => {
   const [stages, setStages] = useState<Stage[]>(initialStages);
-  const columns = 6; // Set the number of columns
 
   const getCardColor = (status: "ongoing" | "completed" | "incomplete") => {
     switch (status) {
@@ -39,9 +46,9 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
   ) => {
     if (!isAdmin) {
       await Swal.fire({
-        icon: 'warning',
-        title: 'Access Denied',
-        text: 'Only admins can change the status.',
+        icon: "warning",
+        title: "Access Denied",
+        text: "Only admins can change the status.",
       });
       return;
     }
@@ -57,24 +64,18 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
     await makeApiCall(status, stageId);
   };
 
-  const makeApiCall = async (
-    status: "ongoing" | "completed" | "incomplete",
-    cardId: number
-  ) => {
-    await axios.put(
-      `http://localhost:3001/projects/stage/${projectId}/${cardId}`,
-      { status }
-    );
+  const makeApiCall = async (status: "ongoing" | "completed" | "incomplete", cardId: number) => {
+    await axios.put(`http://localhost:3001/projects/stage/${projectId}/${cardId}`, { status });
   };
-  
+
   const onDragEnd = async (result: any) => {
     if (!result.destination) return;
 
     if (!isAdmin) {
       await Swal.fire({
-        icon: 'warning',
-        title: 'Access Denied',
-        text: 'Only admins can rearrange the stages.',
+        icon: "warning",
+        title: "Access Denied",
+        text: "Only admins can rearrange the stages.",
       });
       return;
     }
@@ -83,8 +84,28 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
     const [movedStage] = reorderedStages.splice(result.source.index, 1);
     reorderedStages.splice(result.destination.index, 0, movedStage);
 
-    setStages(reorderedStages);
-    await makeApiCall(movedStage.status, movedStage.id);
+    // Call to persist the new order
+    await persistOrder(reorderedStages);
+  };
+
+  const persistOrder = async (orderedStages: Stage[]) => {
+    try {
+      await axios.put(`http://localhost:3001/reorder/${projectId}`, {
+        stages: orderedStages,
+      });
+      await Swal.fire({
+        icon: 'success',
+        title: 'Order Updated',
+        text: 'The stages have been updated successfully!',
+      });
+    } catch (error) {
+      console.error('Error updating stages:', error);
+      await Swal.fire({
+        icon: 'error',
+        title: 'Update Failed',
+        text: 'There was an error updating the stages.',
+      });
+    }
   };
 
   useEffect(() => {
@@ -98,147 +119,102 @@ const DownloadPage: React.FC<DownloadPageProps> = ({
   return (
     <Container>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="stages" direction="horizontal" >
+        <Droppable droppableId="stages" direction="horizontal">
           {(provided) => (
             <Box
               ref={provided.innerRef}
               {...provided.droppableProps}
               sx={{
                 display: "flex",
-                flexWrap: "wrap",
-                alignItems: "flex-start",
-                position: "relative",
+                overflowX: "auto",
                 mt: 2,
                 gap: 1,
+                paddingBottom: "10px",
               }}
             >
-              {Array.from({ length: Math.ceil(stages.length / columns) }).map((_, rowIndex) => {
-                const start = rowIndex * columns;
-                const end = start + columns;
-                const rowStages = stages.slice(start, end);
-
-                // Reverse the order for every second row
-                const displayedStages = rowIndex % 2 === 0 ? rowStages : rowStages.reverse();
-
-                return (
-                  <Box
-                    key={rowIndex}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: rowIndex % 2 === 0 ? "flex-start" : "flex-end", 
-                      marginLeft: rowIndex === 1 ? "30px" : "0", 
-                      width: "100%", 
-                    }}
-                  >
-                    {displayedStages.map((stage, index) => {
-                      const isLastInRow = (index + 1) === displayedStages.length;
-
-                      // Calculate the overall index for the badge, reverse for the second row
-                      const overallIndex = start + (rowIndex % 2 === 0 ? index : (rowStages.length - 1 - index));
-
-                      return (
-                        <React.Fragment key={stage.id}>
-                          <Draggable draggableId={stage.id.toString()} index={start + index}>
-                            {(provided) => (
-                              <Box
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  flexDirection: "column",
-                                  width: "150px",
-                                }}
-                              >
-                                <Box sx={{ marginTop: "50px", minWidth: "120px" }}>
-                                  <FormControl fullWidth>
-                                    <Select
-                                      sx={{
-                                        fontSize: "small",
-                                        width: "120px",
-                                        height: "25px",
-                                        backgroundColor: getCardColor(stage.status),
-                                        marginBottom: '15px'
-                                      }}
-                                      value={stage.status}
-                                      onChange={(e) =>
-                                        handleStatusChange(
-                                          stage.id,
-                                          e.target.value as "ongoing" | "completed" | "incomplete"
-                                        )
-                                      }
-                                    >
-                                      <MenuItem value="ongoing">Ongoing</MenuItem>
-                                      <MenuItem value="completed">Completed</MenuItem>
-                                      <MenuItem value="incomplete">Not Started</MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </Box>
-                                <Badge
-                    badgeContent={overallIndex + 1} 
-                    color="primary"
-                    sx={{ marginBottom: "5px" }}
-                  >
-                                  <Box
-                                    sx={{
-                                      padding: "15px",
-                                      width: "150px",
-                                      height: "80px",
-                                      borderRadius: "8px",
-                                      boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
-                                      backgroundColor: getCardColor(stage.status),
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                      transition: "transform 0.2s",
-                                      "&:hover": {
-                                        transform: "scale(1.05)",
-                                      },
-                                    }}
-                                  >
-                                    <Typography variant="body1">
-                                      {stage.name}
-                                    </Typography>
-                                  </Box>
-                                </Badge>
-                              </Box>
-                            )}
-                          </Draggable>
-                          {/* Arrow connecting the stages */}
-                          {(index < displayedStages.length - 1) && (
-                            <Typography
-                              variant="h4"
+              {stages.map((stage, index) => (
+                <React.Fragment key={stage.id}>
+                  <Draggable draggableId={stage.id.toString()} index={index}>
+                    {(provided) => (
+                      <Box
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          flexDirection: "column",
+                          width: "150px",
+                        }}
+                      >
+                        <Box sx={{ marginTop: "50px", minWidth: "120px" }}>
+                          <FormControl fullWidth>
+                            <Select
                               sx={{
-                                margin: "8px",
-                                alignSelf: "center",
-                                // display: isLastInRow ? 'none' : 'flex',
-                                transform: `translateY(30px) ${rowIndex % 2 === 0 ? 'rotate(0deg)' : 'rotate(180deg)'}`, 
+                                fontSize: "small",
+                                width: "120px",
+                                height: "25px",
+                                backgroundColor: getCardColor(stage.status),
+                                marginBottom: "15px",
                               }}
+                              value={stage.status}
+                              onChange={(e) =>
+                                handleStatusChange(
+                                  stage.id,
+                                  e.target.value as "ongoing" | "completed" | "incomplete"
+                                )
+                              }
                             >
-                              &rarr;
-                            </Typography>
-                          )}
-                          {/* Vertical arrow for new row connection */}
-                          {(index === displayedStages.length - 1 && rowIndex < Math.floor(stages.length / columns)) && (end < stages.length) &&  (
-                            <Typography
-                              variant="h4"
-                              sx={{
-                                margin: "5px",
-                                alignSelf: "center",
-                                transform: `${rowIndex % 2 === 0 ? 'translate(-85px, 110px)' : 'translate(-1095px, 110px)'}`, 
-                              }}
-                            >
-                              &#8595; 
-                            </Typography>
-                          )}
-                        </React.Fragment>
-                      );
-                    })}
-                  </Box>
-                );
-              })}
+                              <MenuItem value="ongoing">Ongoing</MenuItem>
+                              <MenuItem value="completed">Completed</MenuItem>
+                              <MenuItem value="incomplete">Not Started</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <Badge
+                          badgeContent={index + 1}
+                          color="primary"
+                          sx={{ marginBottom: "5px" }}
+                        >
+                          <Box
+                            sx={{
+                              padding: "15px",
+                              width: "150px",
+                              height: "80px",
+                              borderRadius: "8px",
+                              boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+                              backgroundColor: getCardColor(stage.status),
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              transition: "transform 0.2s",
+                              "&:hover": {
+                                transform: "scale(1.05)",
+                              },
+                            }}
+                          >
+                            <Typography variant="body1">{stage.name}</Typography>
+                          </Box>
+                        </Badge>
+                      </Box>
+                    )}
+                  </Draggable>
+
+                  {/* Arrow connecting stages */}
+                  {index < stages.length - 1 && (
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        margin: "8px",
+                        alignSelf: "center",
+                        transform: `translateY(30px)`,
+                      }}
+                    >
+                      &rarr;
+                    </Typography>
+                  )}
+                </React.Fragment>
+              ))}
               {provided.placeholder}
             </Box>
           )}
